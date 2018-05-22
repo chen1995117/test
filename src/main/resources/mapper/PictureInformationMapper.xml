@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongdao.dao.PictureInformationDao">
+	<resultMap id="BaseResultMap" type="com.tongdao.entity.PictureInformation">
+		<id column="id" property="id" />
+		<result column="picture" property="picture" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.tongdao.entity.PictureInformation"
+		extends="BaseResultMap">
+		<result column="picture" property="picture" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="findOneById" resultType="com.tongdao.entity.PictureInformation" parameterType="java.lang.Integer">
+		select
+		*
+		from picture_information
+		where id=  #{id}
+	</select>
+	
+	<delete id="deleteOne" parameterType="java.lang.Integer">
+		delete from
+		picture_information
+		where id = #{id}
+	</delete>
+	
+	<insert id="insert" parameterType="com.tongdao.entity.PictureInformation">
+		insert into picture_information (photo) values(#{photo})
+	</insert>
+	
+	<update id="updatePictureInformation" parameterType="com.tongdao.entity.PictureInformation">
+		update picture_information
+		photo =
+		#{photo}
+		where
+		id = #{id}
+	</update>
+	
+	<select id="findPageCondition" resultMap="BaseResultMap"
+		parameterType="PageInfo">
+		SELECT id,picture from picture_information
+		<where>
+			1=1
+			<if test="from!=null and from !=0 and size!=null and size!=0">
+				LIMIT #{from},#{size}
+			</if>
+		</where>
+	</select>
+
+	<select id="findPageCount" resultType="java.lang.Integer"
+		parameterType="PageInfo">
+		select distinct count(id)
+		From
+		picture_information
+	</select>
+</mapper>

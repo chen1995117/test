@@ -1,0 +1,13 @@
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+     <mapper namespace="com.tongdao.dao.UserDao">
+    <resultMap type="com.tongdao.entity.User" id="userMap">
+    	<id property="userId" column="userId"/>
+    	<result property="password" column="password"/>
+    	<result property="userName" column="userName"/>
+    </resultMap>
+    
+    <!-- 查找所有对象 -->
+    <select id="findUser" resultType="java.lang.Integer" parameterType="com.tongdao.entity.User">
+    	select count(*) from user where password=#{password,jdbcType=VARCHAR} and userName=#{userName,jdbcType=VARCHAR} 
+    </select>
+  </mapper>

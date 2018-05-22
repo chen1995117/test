@@ -1,0 +1,20 @@
+*{padding:0px;margin:0px;}
+
+table{padding:0px  auto;margin:0px auto}
+body,td,div,li,select,input,textarea{font:12px/180% 微软雅黑;}
+img,input.chkbox{border:0px;}
+form{margin:0px;padding:0px;}
+body{background-color:#ededed;}
+ul,li{list-style:none;}
+ul li{float:left;}
+_div{border:1px solid red;}
+.titlefont1{
+	font-size: 13px;
+	color: #000000;
+}
+.menu ul li{float:left;background-position:-158px -37px;line-height:36px;margin:0px;text-align:center;color: #FFFFFF;}
+.menu ul li a{color:white;text-decoration:none;margin-left:10px;margin:9px 15px;color: #FFFFFF;}
+.menu ul li:hover,.menu ul li.current {background-color:#3E3E40;color: #FFFFFF;}
+.m10{width:1000px;margin:0px;align:center}
+.logo{height:38px;width:288px;margin:0;auto;}
+.fl{}

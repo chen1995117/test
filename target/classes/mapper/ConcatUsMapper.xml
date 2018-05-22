@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongdao.dao.ConcatUsDao">
+	<resultMap id="BaseResultMap" type="com.tongdao.entity.ConcatUs">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="pid" property="pid" jdbcType="VARCHAR" />
+		<result column="fax" property="fax" jdbcType="VARCHAR" />
+		<result column="phoneNumber" property="phoneNumber" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="officialAccounts" property="officialAccounts" jdbcType="VARCHAR" />
+		<result column="establishedTime" property="establishedTime" jdbcType="DATE" />
+		<result column="allDayServcePhone" property="allDayServcePhone" jdbcType="VARCHAR" />
+		<result column="companyName" property="companyName" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,pid,companyName,allDayServcePhone,phoneNumber,address,email,officialAccounts,fax,establishedTime
+	</sql>
+
+	<select id="findOneById" resultType="com.tongdao.entity.ConcatUs" parameterType="java.lang.Long">
+		select
+		*
+		from concat_us
+		where id=  #{id}
+	</select>
+	
+	<select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+			<include refid="Base_Column_List" />
+		from 
+			concat_us
+		where id=  #{id}
+	</select>
+	
+	<select id="findByPid" resultMap="BaseResultMap" parameterType="string">
+		select
+			<include refid="Base_Column_List" />
+		from 
+			concat_us
+		where pid=  #{pid}
+	</select>
+	
+	<select id="findAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from concat_us
+	</select>
+	
+	
+	<delete id="delete" parameterType="java.lang.Long">
+		delete from
+		concat_us
+		where id = #{id}
+	</delete>
+	
+	<insert id="insert" parameterType="com.tongdao.entity.ConcatUs">
+		insert into concat_us (companyName,pid,phoneNumber,fax,officialAccounts,email,allDayServcePhone,establishedTime,address)
+		values(
+		#{companyName,jdbcType=VARCHAR},
+		#{pid,jdbcType=VARCHAR},
+		#{phoneNumber,jdbcType=VARCHAR},
+		#{fax,jdbcType=VARCHAR},
+		#{officialAccounts,jdbcType=VARCHAR}, 
+		#{email,jdbcType=VARCHAR},
+		#{allDayServcePhone,jdbcType=VARCHAR},
+		#{establishedTime,jdbcType=DATE},
+		#{address,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<update id="upDATE" parameterType="com.tongdao.entity.ConcatUs">
+		upDATE concat_us
+		companyName = #{companyName,jdbcType=VARCHAR},
+		officialAccounts = #{officialAccounts,jdbcType=VARCHAR},
+		phoneNumber = #{phoneNumber,jdbcType=VARCHAR},
+		address = #{address,jdbcType=VARCHAR},
+		email = #{email,jdbcType=VARCHAR},
+		fax = #{fax,jdbcType=VARCHAR},
+		pid = #{pid,jdbcType=VARCHAR},
+		allDayServcePhone = #{allDayServcePhone,jdbcType=VARCHAR},
+		establishedTime = #{establishedTime,jdbcType=DATE},
+		where
+		id = #{id}
+	</update>
+	
+	<select id="findPageCondition" resultMap="BaseResultMap"
+		parameterType="PageInfo">
+		SELECT <include refid="Base_Column_List" /> from concat_us
+		<where>
+			1=1
+			<!-- 查询条件：创建开始时间 -->
+			 <if test="condition.establishedTime != null and condition.establishedTime != ''">
+                AND establishedTime &gt;= #{condition.establishedTime}
+            </if>
+            <!-- 查询条件：创建结束时间 -->
+            <if test="condition.establishedTime2 != null and condition.establishedTime2 != ''">
+                AND establishedTime &lt;= #{condition.establishedTime2}
+            </if>
+			<if test="from!=null and from !=0 and size!=null and size!=0">
+				LIMIT #{from},#{size}
+			</if>
+		</where>
+	</select>
+
+	<select id="findPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+		select distinct count(id)
+		From
+		concat_us
+		<where>
+			1=1
+			<!-- 查询条件：创建开始时间 -->
+			 <if test="condition.establishedTime != null and condition.establishedTime != ''">
+                AND establishedTime &gt;= #{condition.establishedTime}
+            </if>
+            <!-- 查询条件：创建结束时间 -->
+            <if test="condition.establishedTime2 != null and condition.establishedTime2!= ''">
+                AND establishedTime &lt;= #{condition.establishedTime2}
+            </if>
+		</where>
+	</select>
+</mapper>
